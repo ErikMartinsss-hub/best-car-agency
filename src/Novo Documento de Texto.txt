@@ -1,0 +1,112 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MessageCircle, X, ChevronRight } from 'lucide-react';
+
+// Tipagem para os carros
+interface Car {
+  id: number;
+  name: string;
+  price: string;
+  externalImg: string;
+  internalImg: string;
+  description: string;
+}
+
+const CAR_DATA: Car[] = [
+  {
+    id: 1,
+    name: "Porsche 911 Carrera",
+    price: "$120,000",
+    externalImg: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+    internalImg: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=800&q=80",
+    description: "Experience the pinnacle of German engineering with this pristine Porsche 911."
+  },
+  {
+    id: 2,
+    name: "Tesla Model S Plaid",
+    price: "$89,990",
+    externalImg: "https://images.unsplash.com/photo-1617788138017-80ad42243c5d?auto=format&fit=crop&w=800&q=80",
+    internalImg: "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=800&q=80",
+    description: "The quickest accelerating sedan in production today. Luxury meets electricity."
+  }
+];
+
+export default function App() {
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+
+  const handleWhatsApp = (carName: string) => {
+    const message = `Hello Best Car! I'm interested in scheduling a visit to see the ${carName}.`;
+    const url = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
+
+  return (
+    <div className="min-h-screen bg-zinc-950 text-white p-8">
+      <header className="flex justify-between items-center mb-12">
+        <h1 className="text-3xl font-extrabold text-red-600 tracking-tighter">BEST CAR</h1>
+        <nav className="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest">
+          <a href="#" className="hover:text-red-500 transition">Inventory</a>
+          <a href="#" className="hover:text-red-500 transition">Contact</a>
+        </nav>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {CAR_DATA.map((car) => (
+          <motion.div 
+            key={car.id}
+            whileHover={{ y: -10 }}
+            onClick={() => setSelectedCar(car)}
+            className="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 cursor-pointer group"
+          >
+            <img src={car.externalImg} alt={car.name} className="w-full h-64 object-cover group-hover:scale-105 transition duration-500" />
+            <div className="p-6">
+              <h3 className="text-2xl font-bold">{car.name}</h3>
+              <p className="text-red-500 font-mono text-xl mt-2">{car.price}</p>
+              <button className="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-white transition uppercase text-xs font-bold tracking-widest">
+                Details <ChevronRight size={16} />
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {selectedCar && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+              className="bg-zinc-900 max-w-5xl w-full rounded-[2.5rem] overflow-hidden relative border border-zinc-800"
+            >
+              <button onClick={() => setSelectedCar(null)} className="absolute top-6 right-6 p-2 bg-black/50 rounded-full hover:bg-red-600 transition z-20">
+                <X size={24} />
+              </button>
+
+              <div className="grid md:grid-cols-2 h-full">
+                <div className="flex flex-col gap-1 h-[500px] md:h-auto">
+                  <img src={selectedCar.externalImg} className="h-1/2 w-full object-cover" alt="Exterior" />
+                  <img src={selectedCar.internalImg} className="h-1/2 w-full object-cover" alt="Interior" />
+                </div>
+                <div className="p-10 flex flex-col justify-center bg-zinc-900">
+                  <span className="text-red-600 font-bold text-sm mb-2 uppercase tracking-[0.2em]">Premium Agency</span>
+                  <h2 className="text-5xl font-black mb-4 tracking-tighter italic uppercase">{selectedCar.name}</h2>
+                  <p className="text-zinc-400 text-lg mb-8 leading-relaxed font-light">{selectedCar.description}</p>
+                  <div className="text-3xl font-mono mb-8 text-white">{selectedCar.price}</div>
+                  <button 
+                    onClick={() => handleWhatsApp(selectedCar.name)}
+                    className="bg-green-600 hover:bg-green-700 h-16 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all active:scale-95 shadow-xl shadow-green-900/20"
+                  >
+                    <MessageCircle size={24} />
+                    BOOK A VISIT VIA WHATSAPP
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

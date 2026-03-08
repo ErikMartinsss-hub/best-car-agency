@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* O Tailwind v4 já entende o @apply aqui embaixo */
+body {
+  @apply bg-zinc-950 text-zinc-100;
+  margin: 0;
+  min-height: 100vh;
+}
