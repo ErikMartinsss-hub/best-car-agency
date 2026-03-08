@@ -61,7 +61,7 @@ Se você quiser clonar este projeto e testar na sua máquina:
 Desenvolvido por **Erik Martins** *Estudante de Análise e Desenvolvimento de Sistemas na Estácio.*
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ErikMartinsss-hub)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/SEU-PERFIL)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]([https://www.linkedin.com/in/SEU-PERFIL](https://www.linkedin.com/in/%C3%A9rik-martins-3147b8193/))
 
 ---
 
